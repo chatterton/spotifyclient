@@ -23,6 +23,20 @@ android {
 }
 
 dependencies {
+
+    /////// App related
+
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.10'
+
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:design:25.3.1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+
+    compile 'com.google.dagger:dagger:2.10'
+    provided  'javax.annotation:jsr250-api:1.0'
+
+    /////// Test related
+
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:1.10.19'
 
@@ -35,7 +49,4 @@ dependencies {
     })
     androidTestCompile 'com.android.support.test:testing-support-lib:0.1'
 
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:design:25.3.1'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 }
