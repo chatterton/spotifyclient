@@ -1,4 +1,4 @@
-package jc.spotifyclient.screens;
+package jc.spotifyclient.screens.home;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,14 +16,22 @@ import android.widget.SearchView;
 
 import java.lang.ref.WeakReference;
 
+import javax.inject.Inject;
+
+import jc.spotifyclient.App;
 import jc.spotifyclient.R;
 
 public class HomeScreenActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, HomeScreen {
+
+    @Inject HomeScreenPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ((App)getApplication()).getActivityComponent().inject(this);
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -54,6 +62,7 @@ public class HomeScreenActivity extends AppCompatActivity
 
         if (id == R.id.nav_settings) {
             Log.i("JC", "Settings clicked");
+            Log.i("JC", "PRESENTER: "+presenter);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
