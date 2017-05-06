@@ -9,7 +9,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.SearchView;
+
+import java.lang.ref.WeakReference;
 
 import jc.spotify.spotifyclient.R;
 
@@ -45,7 +50,6 @@ public class HomeScreenActivity extends AppCompatActivity
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_settings) {
@@ -56,4 +60,36 @@ public class HomeScreenActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.activity_main_options_menu, menu);
+
+        SearchView searchView = (SearchView) menu.findItem(R.id.search_item).getActionView();
+        final WeakReference<SearchView> weakSearchView = new WeakReference<>(searchView);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                SearchView sv = weakSearchView.get();
+                if (null != sv) {
+                    sv.clearFocus();
+                }
+                handleSearchQuery(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return true;
+            }
+        });
+
+        return true;
+    }
+
+    private void handleSearchQuery(String query) {
+        Log.i("JC", "QUERY TEXT: "+query);
+    }
+
 }
