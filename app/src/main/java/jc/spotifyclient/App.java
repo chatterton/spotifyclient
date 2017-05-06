@@ -1,10 +1,10 @@
-package jc.spotify.spotifyclient;
+package jc.spotifyclient;
 
 import android.app.Application;
 
-import jc.spotify.spotifyclient.di.ApplicationComponent;
-import jc.spotify.spotifyclient.di.ApplicationModule;
-import jc.spotify.spotifyclient.di.DaggerApplicationComponent;
+import jc.spotifyclient.di.ApplicationComponent;
+import jc.spotifyclient.di.ApplicationModule;
+import jc.spotifyclient.di.DaggerApplicationComponent;
 
 public class App extends Application {
 

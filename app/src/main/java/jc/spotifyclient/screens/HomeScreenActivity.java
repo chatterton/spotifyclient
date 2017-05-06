@@ -1,4 +1,4 @@
-package jc.spotify.spotifyclient.screens;
+package jc.spotifyclient.screens;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,7 +16,7 @@ import android.widget.SearchView;
 
 import java.lang.ref.WeakReference;
 
-import jc.spotify.spotifyclient.R;
+import jc.spotifyclient.R;
 
 public class HomeScreenActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {

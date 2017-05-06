@@ -1,4 +1,4 @@
-package jc.spotify.spotifyclient;
+package jc.spotifyclient;
 
 import org.junit.Test;
 

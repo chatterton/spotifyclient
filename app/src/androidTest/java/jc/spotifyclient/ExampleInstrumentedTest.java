@@ -1,4 +1,4 @@
-package jc.spotify.spotifyclient;
+package jc.spotifyclient;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,7 +21,7 @@ public class ExampleInstrumentedTest {
     public void useAppContext() throws Exception {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
-        assertEquals("jc.spotify.spotifyclient", appContext.getPackageName());
+        assertEquals("jc.spotifyclient", appContext.getPackageName());
     }
 
 }

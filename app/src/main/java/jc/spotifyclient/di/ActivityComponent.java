@@ -1,10 +1,10 @@
-package jc.spotify.spotifyclient.di;
+package jc.spotifyclient.di;
 
 import javax.inject.Singleton;
 
 import dagger.Component;
-import jc.spotify.spotifyclient.App;
-import jc.spotify.spotifyclient.screens.HomeScreenActivity;
+import jc.spotifyclient.App;
+import jc.spotifyclient.screens.HomeScreenActivity;
 
 @Singleton
 @Component(modules = { ApplicationModule.class })

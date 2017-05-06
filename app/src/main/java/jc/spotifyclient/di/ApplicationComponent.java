@@ -1,9 +1,9 @@
-package jc.spotify.spotifyclient.di;
+package jc.spotifyclient.di;
 
 import javax.inject.Singleton;
 
 import dagger.Component;
-import jc.spotify.spotifyclient.App;
+import jc.spotifyclient.App;
 
 @Singleton
 @Component(modules = { ApplicationModule.class })
