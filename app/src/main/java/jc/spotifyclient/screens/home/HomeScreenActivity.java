@@ -13,11 +13,14 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import java.lang.ref.WeakReference;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import jc.spotifyclient.App;
 import jc.spotifyclient.R;
 
@@ -25,6 +28,8 @@ public class HomeScreenActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, HomeScreen {
 
     @Inject HomeScreenPresenter presenter;
+
+    @BindView(R.id.main_hello_text) TextView helloTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +49,9 @@ public class HomeScreenActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        ButterKnife.bind(this);
+        presenter.bindView(this);
     }
 
     @Override
@@ -100,5 +108,19 @@ public class HomeScreenActivity extends AppCompatActivity
     private void handleSearchQuery(String query) {
         Log.i("JC", "QUERY TEXT: "+query);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.i("JC", "ACTIVITY DESTROYED");
+        presenter.unbindView();
+    }
+
+    ////// HomeScreen implementation
+
+    public void updateHelloText(String text) {
+        helloTextView.setText(text);
+    }
+
 
 }

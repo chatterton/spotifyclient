@@ -4,11 +4,11 @@ public class BasePresenter<T extends BaseView> {
 
     protected T view;
 
-    protected void bindView(T view) {
+    public void bindView(T view) {
         this.view = view;
     }
 
-    protected void unbindView() {
+    public void unbindView() {
         this.view = null;
     }
 
