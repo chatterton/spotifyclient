@@ -6,7 +6,7 @@ import dagger.Component;
 import jc.spotifyclient.screens.home.HomeScreenActivity;
 
 @Singleton
-@Component(modules = { ApplicationModule.class })
+@Component(modules = { ApplicationModule.class, NetworkModule.class })
 public interface ActivityComponent {
 
     void inject(HomeScreenActivity screen);

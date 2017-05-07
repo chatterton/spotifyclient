@@ -106,6 +106,7 @@ public class HomeScreenActivity extends BaseActivity<HomeScreenPresenter>
 
     private void handleSearchQuery(String query) {
         Log.i("JC", "QUERY TEXT: "+query);
+        presenter.searchForText(query);
     }
 
     ////// HomeScreen implementation
