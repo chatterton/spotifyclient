@@ -7,7 +7,6 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,17 +16,13 @@ import android.widget.TextView;
 
 import java.lang.ref.WeakReference;
 
-import javax.inject.Inject;
-
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import jc.spotifyclient.App;
 import jc.spotifyclient.R;
+import jc.spotifyclient.framework.BaseActivity;
 
-public class HomeScreenActivity extends AppCompatActivity
+public class HomeScreenActivity extends BaseActivity<HomeScreenPresenter>
         implements NavigationView.OnNavigationItemSelectedListener, HomeScreen {
-
-    @Inject HomeScreenPresenter presenter;
 
     @BindView(R.id.main_hello_text) TextView helloTextView;
 
@@ -35,9 +30,6 @@ public class HomeScreenActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ((App)getApplication()).getActivityComponent().inject(this);
-
-        setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -49,9 +41,16 @@ public class HomeScreenActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
 
-        ButterKnife.bind(this);
-        presenter.bindView(this);
+    @Override
+    protected void resolveDependencies() {
+        ((App)getApplication()).getActivityComponent().inject(this);
+    }
+
+    @Override
+    protected int getContentViewLayoutId() {
+        return R.layout.activity_main;
     }
 
     @Override
@@ -107,13 +106,6 @@ public class HomeScreenActivity extends AppCompatActivity
 
     private void handleSearchQuery(String query) {
         Log.i("JC", "QUERY TEXT: "+query);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.i("JC", "ACTIVITY DESTROYED");
-        presenter.unbindView();
     }
 
     ////// HomeScreen implementation

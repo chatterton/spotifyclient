@@ -4,7 +4,6 @@ import android.app.Application;
 
 import jc.spotifyclient.di.ActivityComponent;
 import jc.spotifyclient.di.ApplicationComponent;
-import jc.spotifyclient.di.ApplicationModule;
 import jc.spotifyclient.di.DaggerActivityComponent;
 import jc.spotifyclient.di.DaggerApplicationComponent;
 
