@@ -11,7 +11,7 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import jc.spotifyclient.framework.BasePresenter;
 import jc.spotifyclient.network.SpotifyServices;
-import jc.spotifyclient.network.models.GetAlbumsResponse;
+import jc.spotifyclient.network.models.ImmutableGetAlbumsResponse;
 
 @Singleton
 public class HomeScreenPresenter extends BasePresenter<HomeScreen> {
@@ -36,10 +36,10 @@ public class HomeScreenPresenter extends BasePresenter<HomeScreen> {
         spotify.getAlbums()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<GetAlbumsResponse>() {
+                .subscribe(new Consumer<ImmutableGetAlbumsResponse>() {
                     @Override
-                    public void accept(@NonNull GetAlbumsResponse getAlbums) throws Exception {
-                        Log.i("JC", "GOT THIS MANY ALBUMS: "+getAlbums.getAlbumCount());
+                    public void accept(@NonNull ImmutableGetAlbumsResponse getAlbums) throws Exception {
+                        Log.i("JC", "GOT THIS MANY ALBUMS: "+getAlbums.albums().items().size());
                     }
                 });
     }

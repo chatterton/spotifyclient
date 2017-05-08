@@ -1,10 +1,14 @@
 package jc.spotifyclient.di;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
 import jc.spotifyclient.network.SpotifyServices;
+import jc.spotifyclient.network.models.GsonAdaptersGetAlbumsResponse;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -20,8 +24,11 @@ public class NetworkModule {
     SpotifyServices provideVehicleServices() {
         OkHttpClient client = new OkHttpClient.Builder()
                 .build();
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapterFactory(new GsonAdaptersGetAlbumsResponse())
+                .create();
         Retrofit retrofit = new Retrofit.Builder()
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .baseUrl(BASE_URL)
                 .client(client)

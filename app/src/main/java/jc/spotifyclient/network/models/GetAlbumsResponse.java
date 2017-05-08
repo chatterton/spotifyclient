@@ -1,25 +1,25 @@
 package jc.spotifyclient.network.models;
 
+import org.immutables.gson.Gson;
+import org.immutables.value.Value;
+
 import java.util.List;
 
-public class GetAlbumsResponse {
+@Gson.TypeAdapters
+@Value.Immutable
+public abstract class GetAlbumsResponse {
 
-    Album albums;
+    public abstract Albums albums();
 
-    public static class Album {
-        String href;
-        List<Item> items;
+    @Value.Immutable
+    public abstract static class Albums {
+        public abstract String href();
+        public abstract List<Item> items();
     }
 
-    public static class Item {
+    @Value.Immutable
+    public abstract static class Item {
 
-    }
-
-    public int getAlbumCount() {
-        if (null != albums && null != albums.items) {
-            return albums.items.size();
-        }
-        return -1;
     }
 
 }
