@@ -5,24 +5,21 @@ import android.util.Log;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
 import jc.spotifyclient.framework.BasePresenter;
-import jc.spotifyclient.network.SpotifyServices;
-import jc.spotifyclient.network.models.ImmutableGetAlbumsResponse;
+import jc.spotifyclient.state.AlbumSearchState;
 
 @Singleton
 public class HomeScreenPresenter extends BasePresenter<HomeScreen> {
 
     private int bindCount = 0;
 
-    private final SpotifyServices spotify;
+    private AlbumSearchState albumSearchState;
 
     @Inject
-    public HomeScreenPresenter(SpotifyServices services) {
-        spotify = services;
+    public HomeScreenPresenter(AlbumSearchState searchState) {
+        albumSearchState = searchState;
     }
 
     @Override
@@ -33,15 +30,14 @@ public class HomeScreenPresenter extends BasePresenter<HomeScreen> {
     }
 
     public void searchForText(String text) {
-        spotify.getAlbums()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<ImmutableGetAlbumsResponse>() {
+        albumSearchState.getAlbumUiObservable()
+                .subscribe(new Consumer<AlbumSearchState.Album>() {
                     @Override
-                    public void accept(@NonNull ImmutableGetAlbumsResponse getAlbums) throws Exception {
-                        Log.i("JC", "GOT THIS MANY ALBUMS: "+getAlbums.albums().items().size());
+                    public void accept(@NonNull AlbumSearchState.Album album) throws Exception {
+                        Log.i("JC", "got album: "+album.getArtist() + " -- "+album.getTitle());
                     }
                 });
+        albumSearchState.search(text);
     }
 
 }
