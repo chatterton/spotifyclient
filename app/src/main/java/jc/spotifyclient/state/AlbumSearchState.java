@@ -7,26 +7,27 @@ import javax.inject.Singleton;
 
 import io.reactivex.Observable;
 import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 import io.reactivex.subjects.PublishSubject;
 import jc.spotifyclient.framework.Scheduler;
 import jc.spotifyclient.network.SpotifyServices;
-import jc.spotifyclient.network.models.ImmutableGetAlbumsResponse;
+import jc.spotifyclient.network.models.GetAlbumsResponse;
 
 @Singleton
 public class AlbumSearchState {
 
     final SpotifyServices spotify;
     final Scheduler scheduler;
-
-    PublishSubject<Album> albumSubject = PublishSubject.create();
+    final AlbumSearchHelper albumSearchHelper;
+    final PublishSubject<Album> albumSubject = PublishSubject.create();
 
     String query;
 
     @Inject
-    public AlbumSearchState(SpotifyServices services, Scheduler scheduler) {
+    public AlbumSearchState(SpotifyServices services, Scheduler scheduler, AlbumSearchHelper helper) {
         this.spotify = services;
         this.scheduler = scheduler;
+        this.albumSearchHelper = helper;
     }
 
     @Value.Immutable
@@ -40,20 +41,13 @@ public class AlbumSearchState {
         spotify.getAlbums()
                 .subscribeOn(scheduler.io())
                 .observeOn(scheduler.computation())
-                .subscribe(new Consumer<ImmutableGetAlbumsResponse>() {
+                .flatMap(new Function<GetAlbumsResponse, Observable<Album>>() {
                     @Override
-                    public void accept(@NonNull ImmutableGetAlbumsResponse immutableGetAlbumsResponse) throws Exception {
-                        int count = 0;
-                        for (ImmutableGetAlbumsResponse.Item item : immutableGetAlbumsResponse.albums().items()) {
-                            Album album = ImmutableAlbum.builder()
-                                    .artist("testArtist"+count)
-                                    .title("testTitle"+count)
-                                    .build();
-                            albumSubject.onNext(album);
-                            count++;
-                        }
+                    public Observable<Album> apply(@NonNull GetAlbumsResponse getAlbumsResponse) throws Exception {
+                        return Observable.fromIterable(albumSearchHelper.albumListFromResponse(getAlbumsResponse));
                     }
-                });
+                })
+                .subscribe(albumSubject);
     }
 
     public void loadMore() {
