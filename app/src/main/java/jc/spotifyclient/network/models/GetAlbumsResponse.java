@@ -7,19 +7,25 @@ import java.util.List;
 
 @Gson.TypeAdapters
 @Value.Immutable
-public abstract class GetAlbumsResponse {
+public interface GetAlbumsResponse {
 
-    public abstract Albums albums();
+    Albums albums();
 
     @Value.Immutable
-    public abstract static class Albums {
-        public abstract String href();
-        public abstract List<Item> items();
+    interface Albums {
+        String href();
+        List<Album> items();
     }
 
     @Value.Immutable
-    public abstract static class Item {
+    interface Album {
+        List<Artist> artists();
+        String name();
+    }
 
+    @Value.Immutable
+    interface Artist {
+        String name();
     }
 
 }

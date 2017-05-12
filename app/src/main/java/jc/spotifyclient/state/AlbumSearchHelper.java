@@ -14,14 +14,12 @@ public class AlbumSearchHelper {
 
     public List<AlbumSearchState.Album> albumListFromResponse(GetAlbumsResponse response) {
         ArrayList<AlbumSearchState.Album> albums = new ArrayList<>();
-        int count = 0;
-        for (GetAlbumsResponse.Item item : response.albums().items()) {
-            AlbumSearchState.Album album = ImmutableAlbum.builder()
-                    .artist("testArtist"+count)
-                    .title("testTitle"+count)
+        for (GetAlbumsResponse.Album album : response.albums().items()) {
+            AlbumSearchState.Album a = ImmutableAlbum.builder()
+                    .artist(album.artists().get(0).name())
+                    .title(album.name())
                     .build();
-            albums.add(album);
-            count++;
+            albums.add(a);
         }
         return albums;
     }
