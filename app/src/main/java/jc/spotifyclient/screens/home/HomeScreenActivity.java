@@ -2,6 +2,7 @@ package jc.spotifyclient.screens.home;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,7 +13,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.SearchView;
-import android.widget.TextView;
 
 import java.lang.ref.WeakReference;
 
@@ -24,7 +24,7 @@ import jc.spotifyclient.framework.BaseActivity;
 public class HomeScreenActivity extends BaseActivity<HomeScreenPresenter>
         implements NavigationView.OnNavigationItemSelectedListener, HomeScreen {
 
-    @BindView(R.id.main_hello_text) TextView helloTextView;
+    @BindView(R.id.album_list) RecyclerView albumList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,7 +112,7 @@ public class HomeScreenActivity extends BaseActivity<HomeScreenPresenter>
     ////// HomeScreen implementation
 
     public void updateHelloText(String text) {
-        helloTextView.setText(text);
+
     }
 
 
